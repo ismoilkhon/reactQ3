@@ -1,0 +1,12 @@
+.card {
+  background-color: azure;
+  border-radius: 10px;
+}
+
+.card-img {
+  object-fit: contain;
+}
+
+.card-img img {
+  width: 100%;
+}
