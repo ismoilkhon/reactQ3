@@ -1,0 +1,32 @@
+.pagination {
+  column-span: 3;
+  display: flex;
+  grid-column-end: 5;
+  align-items: center;
+  grid-column-start: 1;
+  margin: 20px 0 40px 0;
+  justify-content: center;
+}
+
+.pagination button {
+  width: 60px;
+  height: 60px;
+  border: none;
+  color: gray;
+  cursor: pointer;
+  font-weight: 600;
+  margin: 0px 10px;
+  font-size: 1.2rem;
+  border-radius: 30px;
+  background-color: white;
+  background: linear-gradient(145deg, #e6e6e6, #ffffff);
+  box-shadow:
+    20px 20px 60px #d9d9d9,
+    -20px -20px 60px #ffffff;
+}
+
+.pagination .disabled {
+  box-shadow:
+    inset 20px 20px 60px #d9d9d9,
+    inset -20px -20px 60px #ffffff;
+}
