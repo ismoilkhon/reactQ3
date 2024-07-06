@@ -1,11 +1,11 @@
-import { Component } from "react";
 import "./style.css";
+import { Component } from "react";
 
 interface CardProps {
-  title: string;
-  description: string;
   price: number;
+  title: string;
   thumbnail: string;
+  description: string;
 }
 
 export class Card extends Component<CardProps> {

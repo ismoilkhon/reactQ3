@@ -1,8 +1,9 @@
 import "./style.css";
 import { Component } from "react";
+
 interface NavigationState {
-  handleSearch: (searchedWord: string) => void;
   word: string;
+  handleSearch: (searchedWord: string) => void;
 }
 
 export class Navigation extends Component<NavigationState> {

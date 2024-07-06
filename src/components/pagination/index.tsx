@@ -13,7 +13,6 @@ export class Pagination extends Component<PaginationProps> {
     const { onSelect, count, limit, offset } = this.props;
     const totalPages = Math.ceil(count / limit);
 
-    // Logic to determine which pages to show
     let pagesToShow: (string | number)[] = [];
     if (totalPages <= 6) {
       pagesToShow = Array.from(Array(totalPages).keys()).map((i) => i + 1);

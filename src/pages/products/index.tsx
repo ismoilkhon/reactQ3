@@ -7,28 +7,28 @@ import { Pagination } from "../../components/pagination";
 type Product = {
   id: number;
   title: string;
-  description: string;
   price: number;
   thumbnail: string;
+  description: string;
 };
 
 type ProductsState = {
-  products: Product[];
-  offset: number;
+  word: string;
   limit: number;
   total: number;
-  word: string;
+  offset: number;
+  products: Product[];
 };
 
 class Products extends Component<{}, ProductsState> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      products: [],
       total: 0,
-      offset: 0,
       limit: 6,
       word: "",
+      offset: 0,
+      products: [],
     };
   }
 
@@ -75,10 +75,10 @@ class Products extends Component<{}, ProductsState> {
           {this.state.products.map((product) => (
             <Card
               key={product?.id}
-              thumbnail={product.thumbnail}
-              title={product.title}
-              description={product.description}
               price={product.price}
+              title={product.title}
+              thumbnail={product.thumbnail}
+              description={product.description}
             />
           ))}
         </div>
