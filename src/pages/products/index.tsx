@@ -18,6 +18,7 @@ type ProductsState = {
   total: number;
   offset: number;
   products: Product[];
+  isTrue: boolean;
 };
 
 class Products extends React.Component<object, ProductsState> {
@@ -29,6 +30,7 @@ class Products extends React.Component<object, ProductsState> {
       word: "",
       offset: 0,
       products: [],
+      isTrue: true,
     };
   }
 
@@ -93,8 +95,9 @@ class Products extends React.Component<object, ProductsState> {
           className="error"
           type="button"
           value="⛔"
-          // eslint-disable-next-line
-          onClick={() => this.setState({ products: "" })}
+          onClick={() => {
+            throw new Event("error occured");
+          }}
         />
       </>
     );
