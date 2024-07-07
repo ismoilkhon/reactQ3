@@ -1,5 +1,5 @@
 import "./style.css";
-import { Component } from "react";
+import React from "react";
 import { Navigation } from "../navigation";
 import { Card } from "../../components/card";
 import { Pagination } from "../../components/pagination";
@@ -9,7 +9,7 @@ type Product = {
   title: string;
   price: number;
   thumbnail: string;
-  description: string;
+  rating: number;
 };
 
 type ProductsState = {
@@ -20,12 +20,12 @@ type ProductsState = {
   products: Product[];
 };
 
-class Products extends Component<{}, ProductsState> {
-  constructor(props: {}) {
+class Products extends React.Component<object, ProductsState> {
+  constructor(props: object) {
     super(props);
     this.state = {
       total: 0,
-      limit: 6,
+      limit: 8,
       word: "",
       offset: 0,
       products: [],
@@ -62,6 +62,7 @@ class Products extends Component<{}, ProductsState> {
     });
   };
   handleSearch = (word: string) => {
+    if (word === this.state.word) return;
     this.setState({ word, offset: 0 }, () => {
       this.fetchProducts();
     });
@@ -78,7 +79,7 @@ class Products extends Component<{}, ProductsState> {
               price={product.price}
               title={product.title}
               thumbnail={product.thumbnail}
-              description={product.description}
+              rating={product.rating}
             />
           ))}
         </div>
@@ -87,6 +88,13 @@ class Products extends Component<{}, ProductsState> {
           limit={this.state.limit}
           offset={this.state.offset}
           onSelect={this.handleSelect}
+        />
+        <input
+          className="error"
+          type="button"
+          value="⛔"
+          // eslint-disable-next-line
+          onClick={() => this.setState({ products: "" })}
         />
       </>
     );
