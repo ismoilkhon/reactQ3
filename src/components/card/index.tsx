@@ -1,14 +1,15 @@
+import { Rating } from "../rating";
 import "./style.css";
-import { Component } from "react";
+import React from "react";
 
 interface CardProps {
   price: number;
   title: string;
   thumbnail: string;
-  description: string;
+  rating: number;
 }
 
-export class Card extends Component<CardProps> {
+export class Card extends React.Component<CardProps> {
   render() {
     return (
       <div className="card">
@@ -16,9 +17,10 @@ export class Card extends Component<CardProps> {
           <img src={this.props.thumbnail} alt="product-thumbnail" />
         </div>
         <div className="card-body">
-          <h5 className="card-title">{this.props.title}</h5>
-          <p className="card-text">{this.props.description}</p>
-          <p className="price">{this.props.price}</p>
+          <h5>{this.props.title}</h5>
+          <p className="price">${this.props.price}</p>
+          <Rating rating={this.props.rating} />
+          {/* <button>See more...</button> */}
         </div>
       </div>
     );
