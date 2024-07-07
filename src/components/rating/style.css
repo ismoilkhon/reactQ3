@@ -1,0 +1,16 @@
+.rating {
+  width: 100%;
+  font-size: 2rem;
+  margin-bottom: 5%;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.rating label {
+  color: #aaa;
+  text-decoration: none;
+}
+
+.rating .selected {
+  color: orange;
+}
