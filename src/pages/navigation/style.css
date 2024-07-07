@@ -1,39 +1,60 @@
 .container {
   width: 100%;
   height: 15%;
-  padding: 5px 20px;
+  padding: 5px 5%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: teal;
-  margin-bottom: 20px;
+  background-color: #054a91;
 }
 
 .logo {
   font-size: 3rem;
   font-weight: 800;
-  color: azure;
+  color: #dbe4ee;
 }
 
 .search {
-  width: 25%;
-  height: 30px;
   display: flex;
 }
 
 .search input {
-  width: 90%;
   height: 100%;
+  padding: 6px;
+  border: none;
+  color: #3e7cb1;
   border-radius: 5px;
-  padding-left: 10%;
-  border-color: azure;
-  margin-right: 10px;
 }
 
 .search button {
-  width: 10%;
-  height: 100%;
+  height: 90%;
   border-radius: 5px;
   background-color: white;
-  border-color: azure;
+  border: none;
+  margin-left: 20px;
+}
+
+.search .inputContainer {
+  position: relative;
+}
+
+.search ul {
+  position: absolute;
+  top: 100%;
+  background-color: white;
+  width: 96%;
+  left: 2%;
+  list-style-type: none;
+  padding: 0px 6px 6px 6px;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.search li {
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: #054a91;
+  border-bottom: 1px solid #054b9148;
+  padding: 4px 0px;
+  cursor: pointer;
 }

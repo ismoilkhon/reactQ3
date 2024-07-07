@@ -1,34 +1,58 @@
 import "./style.css";
-import { Component } from "react";
+import React from "react";
 
 interface NavigationState {
   word: string;
   handleSearch: (searchedWord: string) => void;
 }
 
-export class Navigation extends Component<NavigationState> {
+export class Navigation extends React.Component<NavigationState> {
   state = {
     word: "",
+    isSearchHistoryVisible: false,
   };
+
+  getSavedQueries = () => {
+    const savedQueriesRaw = localStorage.getItem("queries");
+    return savedQueriesRaw ? JSON.parse(savedQueriesRaw).slice(0, 10) : [];
+  };
+
+  handleSearch = (word: string) => {
+    this.setState({ word });
+    const savedQueries = this.getSavedQueries();
+
+    if (word && !savedQueries?.includes(word)) {
+      localStorage.setItem("queries", JSON.stringify([word, ...savedQueries]));
+    }
+
+    this.props.handleSearch(word);
+  };
+
   render() {
-    const { handleSearch } = this.props;
     return (
       <nav className="container">
         <div className="logo">LOGO</div>
         <div className="search">
-          <input
-            type="search"
-            placeholder="Search"
-            onChange={(e) => this.setState({ word: e.target.value })}
-          />
-          <button
-            onClick={() => {
-              handleSearch(this.state.word);
-              this.setState({ word: "" });
-            }}
-          >
-            🔍
-          </button>
+          <div className="inputContainer">
+            <input
+              type="search"
+              placeholder="Search"
+              value={this.state.word}
+              onChange={(e) => this.setState({ word: e.target.value })}
+              onBlur={() => this.setState({ isSearchHistoryVisible: false })}
+              onFocus={() => this.setState({ isSearchHistoryVisible: true })}
+            />
+            {this.state.isSearchHistoryVisible && (
+              <ul>
+                {this.getSavedQueries().map((query: string) => (
+                  <li key={query} onMouseDown={() => this.handleSearch(query)}>
+                    {query}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+          <button onClick={() => this.handleSearch(this.state.word)}>🔍</button>
         </div>
       </nav>
     );

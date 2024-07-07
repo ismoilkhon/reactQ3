@@ -1,5 +1,5 @@
 import "./style.css";
-import { Component } from "react";
+import React from "react";
 
 interface PaginationProps {
   onSelect: (offset: number) => void;
@@ -8,7 +8,7 @@ interface PaginationProps {
   offset: number;
 }
 
-export class Pagination extends Component<PaginationProps> {
+export class Pagination extends React.Component<PaginationProps> {
   render() {
     const { onSelect, count, limit, offset } = this.props;
     const totalPages = Math.ceil(count / limit);
@@ -35,7 +35,7 @@ export class Pagination extends Component<PaginationProps> {
       <div className="pagination">
         {pagesToShow.map((page: string | number, index) => (
           <button
-            // className={(page - 1) * limit === offset ? "disabled" : ""}
+            className={(Number(page) - 1) * limit === offset ? "disabled" : ""}
             key={index}
             disabled={typeof page !== "number"}
             onClick={() => {
