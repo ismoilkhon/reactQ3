@@ -1,6 +1,6 @@
-import { Rating } from "../rating";
 import "./style.css";
 import React from "react";
+import { Rating } from "../rating";
 
 interface CardProps {
   price: number;
@@ -9,20 +9,22 @@ interface CardProps {
   rating: number;
 }
 
-export class Card extends React.Component<CardProps> {
-  render() {
-    return (
-      <div className="card">
-        <div className="card-img">
-          <img src={this.props.thumbnail} alt="product-thumbnail" />
-        </div>
-        <div className="card-body">
-          <h5>{this.props.title}</h5>
-          <p className="price">${this.props.price}</p>
-          <Rating rating={this.props.rating} />
-          {/* <button>See more...</button> */}
-        </div>
+export const Card: React.FC<CardProps> = ({
+  price,
+  title,
+  thumbnail,
+  rating,
+}) => {
+  return (
+    <div className="card">
+      <div className="card-img">
+        <img src={thumbnail} alt="product-thumbnail" />
       </div>
-    );
-  }
-}
+      <div className="card-body">
+        <h5>{title}</h5>
+        <p className="price">${price}</p>
+        <Rating rating={rating} />
+      </div>
+    </div>
+  );
+};

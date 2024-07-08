@@ -1,5 +1,5 @@
 import "./style.css";
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 interface PaginationProps {
   onSelect: (offset: number) => void;
@@ -8,19 +8,23 @@ interface PaginationProps {
   offset: number;
 }
 
-export class Pagination extends React.Component<PaginationProps> {
-  render() {
-    const { onSelect, count, limit, offset } = this.props;
-    const totalPages = Math.ceil(count / limit);
+export const Pagination: React.FC<PaginationProps> = ({
+  onSelect,
+  count,
+  limit,
+  offset,
+}) => {
+  const [pagesToShow, setPagesToShow] = useState<(string | number)[]>([]);
 
-    let pagesToShow: (string | number)[] = [];
-    if (totalPages <= 6) {
-      pagesToShow = Array.from(Array(totalPages).keys()).map((i) => i + 1);
-    } else if (offset < 5 * limit) {
-      pagesToShow = Array.from(Array(6).keys()).map((i) => i + 1);
+  useEffect(() => {
+    const totalPages = Math.ceil(count / limit);
+    if (totalPages <= 5) {
+      setPagesToShow(Array.from(Array(totalPages).keys()).map((i) => i + 1));
+    } else if (offset < 4 * limit) {
+      setPagesToShow(Array.from(Array(5).keys()).map((i) => i + 1));
     } else {
       const currentPage = Math.floor(offset / limit) + 1;
-      pagesToShow = [
+      setPagesToShow([
         1,
         "...",
         currentPage - 1,
@@ -28,26 +32,26 @@ export class Pagination extends React.Component<PaginationProps> {
         currentPage + 1,
         "...",
         totalPages,
-      ];
+      ]);
     }
+  }, [count, limit, offset]);
 
-    return (
-      <div className="pagination">
-        {pagesToShow.map((page: string | number, index) => (
-          <button
-            className={(Number(page) - 1) * limit === offset ? "disabled" : ""}
-            key={index}
-            disabled={typeof page !== "number"}
-            onClick={() => {
-              if (typeof page === "number") {
-                onSelect((page - 1) * limit);
-              }
-            }}
-          >
-            {page}
-          </button>
-        ))}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="pagination">
+      {pagesToShow.map((page: string | number, index) => (
+        <button
+          className={(Number(page) - 1) * limit === offset ? "disabled" : ""}
+          key={index}
+          disabled={typeof page !== "number"}
+          onClick={() => {
+            if (typeof page === "number") {
+              onSelect((page - 1) * limit);
+            }
+          }}
+        >
+          {page}
+        </button>
+      ))}
+    </div>
+  );
+};
