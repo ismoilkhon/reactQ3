@@ -1,107 +1,81 @@
 import "./style.css";
-import React from "react";
 import { Navigation } from "../navigation";
 import { Card } from "../../components/card";
 import { Pagination } from "../../components/pagination";
+import React, { useState, useEffect, useCallback } from "react";
 
 type Product = {
   id: number;
   title: string;
   price: number;
-  thumbnail: string;
   rating: number;
+  thumbnail: string;
+  discountPercentage: number;
 };
 
-type ProductsState = {
-  word: string;
-  limit: number;
-  total: number;
-  offset: number;
-  products: Product[];
-  isTrue: boolean;
+export const Products: React.FC = () => {
+  const [limit] = useState<number>(8);
+  const [word, setWord] = useState<string>("");
+  const [total, setTotal] = useState<number>(0);
+  const [offset, setOffset] = useState<number>(0);
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    fetch(
+      `https://dummyjson.com/products/search?q=${word}&limit=${limit}&skip=${offset}`,
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        setProducts(res.products);
+        setTotal(res.total);
+      })
+      .catch((err) => console.log(err));
+  }, [offset, word]);
+
+  const handleSelect = useCallback((newOffset: number) => {
+    setOffset(newOffset);
+  }, []);
+
+  const handleSearch = useCallback(
+    (newWord: string) => {
+      if (newWord === word) return;
+      setWord(newWord);
+      setOffset(0);
+    },
+    [word],
+  );
+
+  return (
+    <>
+      <Navigation handleSearch={handleSearch} />
+      <div className="grit">
+        {products.map((product) => (
+          <Card
+            key={product.id}
+            price={product.price}
+            id={product.id}
+            title={product.title}
+            rating={product.rating}
+            thumbnail={product.thumbnail}
+            discountPercentage={product.discountPercentage}
+          />
+        ))}
+      </div>
+
+      <Pagination
+        count={total}
+        limit={limit}
+        offset={offset}
+        onSelect={handleSelect}
+      />
+      <input
+        className="error"
+        type="button"
+        value="⛔"
+        onClick={() => {
+          throw new Error("An error occurred");
+        }}
+      />
+    </>
+  );
 };
-
-class Products extends React.Component<object, ProductsState> {
-  constructor(props: object) {
-    super(props);
-    this.state = {
-      total: 0,
-      limit: 8,
-      word: "",
-      offset: 0,
-      products: [],
-      isTrue: true,
-    };
-  }
-
-  componentDidMount() {
-    this.fetchProducts();
-  }
-
-  fetchProducts = async () => {
-    try {
-      const response = await fetch(
-        `https://dummyjson.com/products/search?q=${this.state.word}&limit=${this.state.limit}&skip=${this.state.offset}`,
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch");
-      }
-      const data: { products: Product[]; total: number } =
-        await response.json();
-
-      this.setState({
-        products: data.products,
-        total: data?.total,
-      });
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    }
-  };
-
-  handleSelect = (offset: number) => {
-    this.setState({ offset }, () => {
-      this.fetchProducts();
-    });
-  };
-  handleSearch = (word: string) => {
-    if (word === this.state.word) return;
-    this.setState({ word, offset: 0 }, () => {
-      this.fetchProducts();
-    });
-  };
-
-  render() {
-    return (
-      <>
-        <Navigation handleSearch={this.handleSearch} word={this.state.word} />
-        <div className="grit">
-          {this.state.products.map((product) => (
-            <Card
-              key={product?.id}
-              price={product.price}
-              title={product.title}
-              thumbnail={product.thumbnail}
-              rating={product.rating}
-            />
-          ))}
-        </div>
-        <Pagination
-          count={this.state.total}
-          limit={this.state.limit}
-          offset={this.state.offset}
-          onSelect={this.handleSelect}
-        />
-        <input
-          className="error"
-          type="button"
-          value="⛔"
-          onClick={() => {
-            throw new Event("error occured");
-          }}
-        />
-      </>
-    );
-  }
-}
-
-export default Products;

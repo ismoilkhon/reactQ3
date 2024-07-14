@@ -1,28 +1,40 @@
-import { Rating } from "../rating";
 import "./style.css";
-import React from "react";
+import { Rating } from "../rating";
+import { useNavigate } from "react-router-dom";
 
 interface CardProps {
   price: number;
+  id: number;
   title: string;
   thumbnail: string;
   rating: number;
+  discountPercentage: number;
 }
 
-export class Card extends React.Component<CardProps> {
-  render() {
-    return (
-      <div className="card">
+export function Card({
+  thumbnail,
+  id,
+  title,
+  price,
+  discountPercentage,
+  rating,
+}: CardProps) {
+  const navigate = useNavigate();
+  return (
+    <>
+      <div className="card" onClick={() => navigate(`/${id}`)}>
         <div className="card-img">
-          <img src={this.props.thumbnail} alt="product-thumbnail" />
+          <img src={thumbnail} alt="product-thumbnail" />
         </div>
         <div className="card-body">
-          <h5>{this.props.title}</h5>
-          <p className="price">${this.props.price}</p>
-          <Rating rating={this.props.rating} />
-          {/* <button>See more...</button> */}
+          <h5>{title}</h5>
+          <p className="price">
+            ${price}{" "}
+            <samp className="discount">-{Math.round(discountPercentage)}%</samp>
+          </p>
+          <Rating rating={rating} />
         </div>
       </div>
-    );
-  }
+    </>
+  );
 }
