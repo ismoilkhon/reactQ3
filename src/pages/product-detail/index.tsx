@@ -35,9 +35,6 @@ export const ProductDetail: React.FC = () => {
 
   return (
     <>
-      <button className="back-arrow" onClick={() => navigate("/")}>
-        ➜
-      </button>
       <div className="product-detail">
         <div className="img-cont">
           <img src={selectedImage ?? ""} alt="Product" />
@@ -56,9 +53,9 @@ export const ProductDetail: React.FC = () => {
           <h1>{product?.title}</h1>
           <p>{product?.description}</p>
           <strong>Category:</strong>
-          <span>{capitalize(product?.category)}</span>
+          <span>{capitalize(String(product?.category))}</span>
           <strong>Brand:</strong>
-          <span>{capitalize(product?.brand)}</span>
+          <span>{capitalize(String(product?.brand))}</span>
           <strong>Stock:</strong>
           <span>{product?.stock}</span>
           <div className="row">
@@ -74,13 +71,16 @@ export const ProductDetail: React.FC = () => {
                 Save {Math.round(Number(product?.discountPercentage))}%
               </p>
               <div className="inline-row">
-                <p>Old price: </p>
-                <del> ${product?.price}</del>
+                <p>Old price:_ </p>
+                <del>${product?.price}</del>
               </div>
             </div>
           </div>
           <Rating rating={Number(product?.rating)} />
         </div>
+        <button className="x-btn" onClick={() => navigate(-1)}>
+          ☓
+        </button>
       </div>
     </>
   );

@@ -2,6 +2,7 @@
   cursor: pointer;
   overflow: hidden;
   border-radius: 8px;
+  position: relative;
   background-color: white;
   transition: all 0.2s ease-out;
   animation: slideIn 0.8s ease-out;
@@ -55,6 +56,12 @@ button {
   padding: 5px 10px;
   border: none;
   border-radius: 3px;
+}
+
+.discount {
+  color: #054b91ac;
+  font-weight: 200;
+  font-size: 1rem;
 }
 
 @keyframes slideIn {

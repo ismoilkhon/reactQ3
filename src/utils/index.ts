@@ -1,4 +1,4 @@
-export function capitalize(text: string | undefined | null): string {
+export function capitalize(text: string): string {
   if (!text) {
     return "";
   }
@@ -6,7 +6,7 @@ export function capitalize(text: string | undefined | null): string {
   return text[0].toUpperCase() + text.slice(1);
 }
 
-export function getNewPrice(price: number, discount: number): number {
+export function getNewPrice(price: number, discount?: number): number {
   if (!discount) {
     return price;
   }

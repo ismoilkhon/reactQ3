@@ -8,13 +8,14 @@ type Product = {
   id: number;
   title: string;
   price: number;
-  thumbnail: string;
   rating: number;
+  thumbnail: string;
+  discountPercentage: number;
 };
 
 export const Products: React.FC = () => {
-  const [word, setWord] = useState<string>("");
   const [limit] = useState<number>(8);
+  const [word, setWord] = useState<string>("");
   const [total, setTotal] = useState<number>(0);
   const [offset, setOffset] = useState<number>(0);
   const [products, setProducts] = useState<Product[]>([]);
@@ -52,12 +53,15 @@ export const Products: React.FC = () => {
           <Card
             key={product.id}
             price={product.price}
+            id={product.id}
             title={product.title}
-            thumbnail={product.thumbnail}
             rating={product.rating}
+            thumbnail={product.thumbnail}
+            discountPercentage={product.discountPercentage}
           />
         ))}
       </div>
+
       <Pagination
         count={total}
         limit={limit}
